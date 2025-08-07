@@ -1,13 +1,14 @@
 import styled from "styled-components";
+
 export const CarouselContainer = styled.div`
   max-width: 120%;
   margin: 0 auto;
-  padding: 20px 0;
+  padding: ${({ theme }) => theme.spacing.md} 0;
   position: relative;
   overflow: hidden;
 
-  @media (max-width: 768px) {
-    padding: 10px;
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    padding: ${({ theme }) => theme.spacing.sm};
   }
 `;
 
@@ -15,32 +16,32 @@ export const Title = styled.h1`
   text-align: center;
   font-size: clamp(32px, 5vw, 48px);
   font-weight: bold;
-  color: #2c3e50;
-  margin-bottom: 40px;
+  color: ${({ theme }) => theme.colors.primaryText};
+  margin-bottom: ${({ theme }) => theme.spacing.lg};
   font-family: "Arial", sans-serif;
 
-  @media (max-width: 768px) {
-    margin-bottom: 20px;
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    margin-bottom: ${({ theme }) => theme.spacing.md};
   }
 `;
 
 export const CarouselWrapper = styled.div`
   display: flex;
   align-items: center;
-  gap: 20px;
-  margin-bottom: 30px;
+  gap: ${({ theme }) => theme.spacing.md};
+  margin-bottom: ${({ theme }) => theme.spacing.lg};
   position: relative;
 
-  @media (max-width: 768px) {
-    gap: 10px;
-    margin-bottom: 20px;
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    gap: ${({ theme }) => theme.spacing.sm};
+    margin-bottom: ${({ theme }) => theme.spacing.md};
   }
 `;
 
 export const SideImage = styled.div<{ $isLeft?: boolean }>`
   width: 200px;
   height: 300px;
-  border-radius: 8px;
+  border-radius: ${({ theme }) => theme.borderRadius.lg};
   overflow: hidden;
   cursor: pointer;
   transition: transform 0.3s ease;
@@ -61,7 +62,7 @@ export const SideImage = styled.div<{ $isLeft?: boolean }>`
     height: 225px;
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
     display: none;
   }
 `;
@@ -70,17 +71,17 @@ export const MainCarousel = styled.div`
   flex: 1;
   position: relative;
   height: 500px;
-  border-radius: 12px;
+  border-radius: ${({ theme }) => theme.borderRadius.lg};
   overflow: hidden;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  box-shadow: ${({ theme }) => theme.shadow.light};
 
   @media (max-width: 1024px) {
     height: 400px;
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
     height: 300px;
-    border-radius: 8px;
+    border-radius: ${({ theme }) => theme.borderRadius.md};
   }
 `;
 
@@ -91,12 +92,11 @@ export const CarouselImage = styled.div<{ $isActive: boolean }>`
   width: 100%;
   height: 100%;
   opacity: ${(props) => (props.$isActive ? 1 : 0)};
-  transition: opacity 0.5s ease-in-out;
+  transition: all 0.5s ease;
   display: flex;
   align-items: center;
   justify-content: center;
   transform: scale(1);
-  transition: all 0.5s ease;
 
   &:hover {
     transform: ${(props) => (props.$isActive ? "scale(1.02)" : "scale(1)")};
@@ -105,16 +105,16 @@ export const CarouselImage = styled.div<{ $isActive: boolean }>`
 
 export const ContentSection = styled.div`
   display: flex;
-  gap: 40px;
+  gap: ${({ theme }) => theme.spacing.lg};
   align-items: center;
   justify-content: center;
-  padding: 0 20px;
+  padding: 0 ${({ theme }) => theme.spacing.md};
   width: 100%;
 
-  @media (max-width: 768px) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
     flex-direction: column;
-    gap: 20px;
-    padding: 0 10px;
+    gap: ${({ theme }) => theme.spacing.md};
+    padding: 0 ${({ theme }) => theme.spacing.sm};
   }
 `;
 
@@ -127,24 +127,24 @@ export const PropertyInfo = styled.div`
 export const PropertyName = styled.h3`
   font-size: clamp(20px, 3vw, 24px);
   font-weight: bold;
-  color: #2c3e50;
-  margin-bottom: 10px;
+  color: ${({ theme }) => theme.colors.primaryText};
+  margin-bottom: ${({ theme }) => theme.spacing.sm};
   font-family: "Arial", sans-serif;
 `;
 
 export const PropertyDescription = styled.p`
-  color: #4a69bd;
+  color: ${({ theme }) => theme.colors.highlight};
   font-size: clamp(14px, 2vw, 16px);
   line-height: 1.6;
-  margin-bottom: 20px;
+  margin-bottom: ${({ theme }) => theme.spacing.md};
   width: 50%;
 `;
 
 export const DotsContainer = styled.div`
   display: flex;
   justify-content: center;
-  gap: 8px;
-  margin-bottom: 20px;
+  gap: ${({ theme }) => theme.spacing.xs};
+  margin-bottom: ${({ theme }) => theme.spacing.md};
 `;
 
 export const Dot = styled.button<{ $isActive: boolean }>`
@@ -152,19 +152,20 @@ export const Dot = styled.button<{ $isActive: boolean }>`
   height: 12px;
   border-radius: 50%;
   border: none;
-  background-color: ${(props) => (props.$isActive ? "#4a69bd" : "#ccc")};
+  background-color: ${({ $isActive, theme }) =>
+    $isActive ? theme.colors.highlight : "#ccc"};
   cursor: pointer;
   transition: all 0.3s ease;
 
   &:hover {
-    background-color: #4a69bd;
+    background-color: ${({ theme }) => theme.colors.highlight};
     transform: scale(1.2);
   }
 `;
 
 export const BookButton = styled.button`
-  background-color: #2c3e50;
-  color: white;
+  background-color: ${({ theme }) => theme.colors.buttonBackground};
+  color: ${({ theme }) => theme.colors.white};
   border: none;
   padding: 12px 24px;
   font-size: clamp(14px, 2vw, 16px);
@@ -173,12 +174,12 @@ export const BookButton = styled.button`
   letter-spacing: 1px;
   cursor: pointer;
   transition: all 0.3s ease;
-  border-radius: 4px;
+  border-radius: ${({ theme }) => theme.borderRadius.sm};
   display: block;
   margin: 0 auto;
 
   &:hover {
-    background-color: #34495e;
+    background-color: ${({ theme }) => theme.colors.buttonHover};
     transform: translateY(-2px);
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
   }
@@ -213,7 +214,7 @@ export const NavButton = styled.button`
     right: 10px;
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
     width: 30px;
     height: 30px;
   }
@@ -221,18 +222,18 @@ export const NavButton = styled.button`
 
 export const SlideCounter = styled.div`
   position: absolute;
-  bottom: 20px;
-  right: 20px;
+  bottom: ${({ theme }) => theme.spacing.md};
+  right: ${({ theme }) => theme.spacing.md};
   background: rgba(0, 0, 0, 0.5);
-  color: white;
+  color: ${({ theme }) => theme.colors.white};
   padding: 5px 10px;
   border-radius: 20px;
-  font-size: 14px;
+  font-size: ${({ theme }) => theme.fontSizes.xs};
   z-index: 10;
 
-  @media (max-width: 768px) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
     font-size: 12px;
-    bottom: 10px;
-    right: 10px;
+    bottom: ${({ theme }) => theme.spacing.sm};
+    right: ${({ theme }) => theme.spacing.sm};
   }
 `;

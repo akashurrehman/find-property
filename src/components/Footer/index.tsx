@@ -1,5 +1,7 @@
 "use client";
+
 import React from "react";
+import Image from "next/image";
 
 import {
   MapPin,
@@ -42,166 +44,169 @@ import {
   ContactInfo,
   LegalLinks,
   LegalLink,
+  StyledHr, // move the hr styles here
 } from "./style";
+
+const footerLinks = [
+  {
+    title: "Properties",
+    links: [
+      { label: "New Homes", href: "#" },
+      { label: "Properties for Sale", href: "#" },
+      { label: "Properties to Rent", href: "#" },
+      { label: "Recently Sold", href: "#" },
+      { label: "Recently Let", href: "#" },
+    ],
+  },
+  {
+    title: "Insights",
+    links: [
+      { label: "Sellers Guide", href: "#" },
+      { label: "Buying Guide", href: "#" },
+      { label: "Landlord Guide", href: "#" },
+      { label: "Tenant Guide", href: "#" },
+    ],
+  },
+  {
+    title: "About Us",
+    links: [
+      { label: "Book a Property Appraisal", href: "#" },
+      { label: "Area Guides", href: "#" },
+      { label: "Career", href: "#" },
+    ],
+  },
+  {
+    title: "More Info",
+    links: [
+      { label: "Terms & Fees", href: "#" },
+      { label: "Druce Events", href: "#" },
+      { label: "FAQ", href: "#" },
+      { label: "Blog", href: "#" },
+    ],
+  },
+];
+
+const socialLinks = [
+  { Icon: Facebook, href: "https://facebook.com", label: "Facebook" },
+  { Icon: Instagram, href: "https://instagram.com", label: "Instagram" },
+  { Icon: Twitter, href: "https://twitter.com", label: "Twitter" },
+  { Icon: Linkedin, href: "https://linkedin.com", label: "LinkedIn" },
+  { Icon: Youtube, href: "https://youtube.com", label: "YouTube" },
+];
 
 const Footer: React.FC = () => {
   return (
     <FooterWrapper>
-      <MainFooter>
+      <MainFooter as="footer" aria-label="Site Footer">
         <FooterContainer>
           <FooterGrid>
             <LogoSection>
               <Logo>
                 <div>
-                  <LogoText src="/logo.png" alt="Logo Text" />
+                  <Image
+                    src="/logo.png"
+                    alt="Druce Logo"
+                    width={160}
+                    height={40}
+                    priority
+                    // add loading="eager" if necessary
+                  />
                 </div>
               </Logo>
             </LogoSection>
 
-            <FooterColumn>
-              <ColumnTitle>Properties</ColumnTitle>
-              <ColumnList>
-                <ColumnItem>
-                  <ColumnLink href="#">New Homes</ColumnLink>
-                </ColumnItem>
-                <ColumnItem>
-                  <ColumnLink href="#">Properties for Sale</ColumnLink>
-                </ColumnItem>
-                <ColumnItem>
-                  <ColumnLink href="#">Properties to Rent</ColumnLink>
-                </ColumnItem>
-                <ColumnItem>
-                  <ColumnLink href="#">Recently Sold</ColumnLink>
-                </ColumnItem>
-                <ColumnItem>
-                  <ColumnLink href="#">Recently Let</ColumnLink>
-                </ColumnItem>
-              </ColumnList>
-            </FooterColumn>
-
-            <FooterColumn>
-              <ColumnTitle>Insights</ColumnTitle>
-              <ColumnList>
-                <ColumnItem>
-                  <ColumnLink href="#">Sellers Guide</ColumnLink>
-                </ColumnItem>
-                <ColumnItem>
-                  <ColumnLink href="#">Buying Guide</ColumnLink>
-                </ColumnItem>
-                <ColumnItem>
-                  <ColumnLink href="#">Landlord Guide</ColumnLink>
-                </ColumnItem>
-                <ColumnItem>
-                  <ColumnLink href="#">Tenant Guide</ColumnLink>
-                </ColumnItem>
-              </ColumnList>
-            </FooterColumn>
-
-            <FooterColumn>
-              <ColumnTitle>About Us</ColumnTitle>
-              <ColumnList>
-                <ColumnItem>
-                  <ColumnLink href="#">Book a Property Appraisal</ColumnLink>
-                </ColumnItem>
-                <ColumnItem>
-                  <ColumnLink href="#">Area Guides</ColumnLink>
-                </ColumnItem>
-                <ColumnItem>
-                  <ColumnLink href="#">Career</ColumnLink>
-                </ColumnItem>
-              </ColumnList>
-            </FooterColumn>
-
-            <FooterColumn>
-              <ColumnTitle>More Info</ColumnTitle>
-              <ColumnList>
-                <ColumnItem>
-                  <ColumnLink href="#">Terms & Fees</ColumnLink>
-                </ColumnItem>
-                <ColumnItem>
-                  <ColumnLink href="#">Druce Events</ColumnLink>
-                </ColumnItem>
-                <ColumnItem>
-                  <ColumnLink href="#">FAQ</ColumnLink>
-                </ColumnItem>
-                <ColumnItem>
-                  <ColumnLink href="#">Blog</ColumnLink>
-                </ColumnItem>
-              </ColumnList>
-            </FooterColumn>
+            {footerLinks.map(({ title, links }) => (
+              <FooterColumn key={title} as="nav" aria-labelledby={`${title.toLowerCase()}-footer`}>
+                <ColumnTitle id={`${title.toLowerCase()}-footer`}>{title}</ColumnTitle>
+                <ColumnList>
+                  {links.map(({ label, href }) => (
+                    <ColumnItem key={label}>
+                      <ColumnLink href={href}>{label}</ColumnLink>
+                    </ColumnItem>
+                  ))}
+                </ColumnList>
+              </FooterColumn>
+            ))}
           </FooterGrid>
         </FooterContainer>
       </MainFooter>
 
       <BottomFooter>
         <BottomContent>
-          <ContactInfo>
+          <ContactInfo as="address" aria-label="Contact information">
             <ContactItem>
-              <MapPin />
+              <MapPin aria-hidden="true" />
               <span>
-                Montpelier House, 106 Brompton Road, Knightsbridge, London, SW3
-                1JJ
+                Montpelier House, 106 Brompton Road, Knightsbridge, London, SW3 1JJ
               </span>
             </ContactItem>
             <ContactItem>
-              <Phone />
-              <span>+ 44 207 183 6592</span>
+              <Phone aria-hidden="true" />
+              <a href="tel:+442071836592" aria-label="Call Druce +44 207 183 6592">
+                +44 207 183 6592
+              </a>
             </ContactItem>
             <ContactItem>
-              <Mail />
-              <span>info@druce.com</span>
+              <Mail aria-hidden="true" />
+              <a href="mailto:info@druce.com" aria-label="Email Druce info@druce.com">
+                info@druce.com
+              </a>
             </ContactItem>
           </ContactInfo>
-          <hr
-            style={{
-              width: "100%",
-              margin: "0 auto",
-              transform: "translateY(-15px)",
-              border: "1px solid #CD9B4B",
-            }}
-          />
+
+          <StyledHr aria-hidden="true" />
+
           <FooterBottom>
             <LeftSection>
               <Copyright>
-                © 2024 Druce & Co International Ltd. All rights reserved. Druce
-                & Co International Ltd. Incorporated and registered in England
-                and Wales.
+                © 2024 Druce & Co International Ltd. All rights reserved. Druce & Co International Ltd. Incorporated and registered in England and Wales.
                 <br />
-                Registration Number: 13695268. Registered Office: Montpelier
-                House 106 Brompton Road, Knightsbridge, London, England, SW3 1JJ
+                Registration Number: 13695268. Registered Office: Montpelier House 106 Brompton Road, Knightsbridge, London, England, SW3 1JJ
               </Copyright>
               <LegalLinks>
-                <LegalLink href="#">Terms of Use</LegalLink>
-                <LegalLink href="#">Privacy Policy</LegalLink>
-                <LegalLink href="#">Cookies Policy</LegalLink>
+                <LegalLink href="#" aria-label="Terms of Use">
+                  Terms of Use
+                </LegalLink>
+                <LegalLink href="#" aria-label="Privacy Policy">
+                  Privacy Policy
+                </LegalLink>
+                <LegalLink href="#" aria-label="Cookies Policy">
+                  Cookies Policy
+                </LegalLink>
               </LegalLinks>
             </LeftSection>
 
             <RightSection>
-              <SocialLinks>
+              <SocialLinks aria-label="Social media links">
                 <SocialText>CONNECT WITH US</SocialText>
-                <SocialIcon href="#">
-                  <Facebook />
-                </SocialIcon>
-                <SocialIcon href="#">
-                  <Instagram />
-                </SocialIcon>
-                <SocialIcon href="#">
-                  <Twitter />
-                </SocialIcon>
-                <SocialIcon href="#">
-                  <Linkedin />
-                </SocialIcon>
-                <SocialIcon href="#">
-                  <Youtube />
-                </SocialIcon>
+                {socialLinks.map(({ Icon, href, label }) => (
+                  <SocialIcon
+                    key={label}
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`Visit our ${label} page`}
+                  >
+                    <Icon aria-hidden="true" />
+                  </SocialIcon>
+                ))}
               </SocialLinks>
 
-              <Affiliations>
+              <Affiliations aria-label="Affiliations">
                 <AffiliationText>AFFILIATIONS</AffiliationText>
                 <AffiliationLogos>
-                  <AffiliationLogo src="/se.png" />
-                  <AffiliationLogo src="/by.png" />
+                  <AffiliationLogo
+                    src="/se.png"
+                    alt="Sustainable Energy Affiliation Logo"
+                    width={50}
+                    height={50}
+                  />
+                  <AffiliationLogo
+                    src="/by.png"
+                    alt="Better You Affiliation Logo"
+                    width={50}
+                    height={50}
+                  />
                 </AffiliationLogos>
               </Affiliations>
             </RightSection>

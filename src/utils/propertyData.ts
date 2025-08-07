@@ -1,4 +1,6 @@
-export const propertyData = [
+import { Property } from "@/src/types/property";
+
+export const propertyData: Property[] = [
   {
     image:
       "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",

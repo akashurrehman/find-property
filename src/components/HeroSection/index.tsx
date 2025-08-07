@@ -1,7 +1,7 @@
 "use client";
-import React, { useState, useEffect } from "react";
-import { propertyData } from "../../utils/propertyData";
+import React, { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
+import { propertyData } from "../../utils/propertyData";
 import {
   CarouselContainer,
   Title,
@@ -19,85 +19,90 @@ import {
   SlideCounter,
   Dot,
 } from "./style";
-const PropertyCarousel = () => {
+
+
+const AUTO_ROTATE_INTERVAL = 5000;
+const AUTO_ROTATE_RESUME_DELAY = 10000;
+
+const PropertyCarousel: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAutoRotating, setIsAutoRotating] = useState(true);
   const totalSlides = propertyData.length;
 
+  const pauseAutoRotate = useCallback(() => {
+    setIsAutoRotating(false);
+    const timeout = setTimeout(() => {
+      setIsAutoRotating(true);
+    }, AUTO_ROTATE_RESUME_DELAY);
+
+    return () => clearTimeout(timeout);
+  }, []);
 
   useEffect(() => {
-    let interval: NodeJS.Timeout;
+    if (!isAutoRotating) return;
 
-    if (isAutoRotating) {
-      interval = setInterval(() => {
-        setCurrentIndex((prevIndex) => (prevIndex + 1) % totalSlides);
-      }, 5000);
-    }
+    const interval = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % totalSlides);
+    }, AUTO_ROTATE_INTERVAL);
 
     return () => clearInterval(interval);
-  }, [totalSlides, isAutoRotating]);
+  }, [isAutoRotating, totalSlides]);
 
   const goToSlide = (index: number) => {
     setCurrentIndex(index);
-    setIsAutoRotating(false);
-    setTimeout(() => setIsAutoRotating(true), 10000);
+    pauseAutoRotate();
   };
 
   const goToPrevSlide = () => {
-    setCurrentIndex((prevIndex) => (prevIndex - 1 + totalSlides) % totalSlides);
-    setIsAutoRotating(false);
-    setTimeout(() => setIsAutoRotating(true), 10000);
+    setCurrentIndex((prev) => (prev - 1 + totalSlides) % totalSlides);
+    pauseAutoRotate();
   };
 
   const goToNextSlide = () => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % totalSlides);
-    setIsAutoRotating(false);
-    setTimeout(() => setIsAutoRotating(true), 10000);
+    setCurrentIndex((prev) => (prev + 1) % totalSlides);
+    pauseAutoRotate();
   };
 
-  
-  const prevImageIndex = (currentIndex - 1 + totalSlides) % totalSlides;
-  const nextImageIndex = (currentIndex + 1) % totalSlides;
+  const prevIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+  const nextIndex = (currentIndex + 1) % totalSlides;
+
+  const currentProperty = propertyData[currentIndex];
 
   return (
-    <CarouselContainer>
+    <CarouselContainer aria-label="Featured Property Carousel">
       <Title>Featured Properties</Title>
 
       <CarouselWrapper>
-        <SideImage $isLeft onClick={goToPrevSlide}>
+        <SideImage $isLeft onClick={goToPrevSlide} role="button" aria-label="Previous Slide">
           <Image
-            src={propertyData[prevImageIndex].image}
-            alt={`Property preview ${prevImageIndex}`}
+            src={propertyData[prevIndex].image}
+            alt={`Preview of ${propertyData[prevIndex].name}`}
             layout="fill"
             objectFit="cover"
-            priority={prevImageIndex === 0}
+            priority
           />
         </SideImage>
 
         <MainCarousel>
           {propertyData.map((property, index) => (
-            <CarouselImage key={index} $isActive={index === currentIndex}>
+            <CarouselImage key={index} $isActive={index === currentIndex} role="group">
               <Image
                 src={property.image}
-                alt={`Property image ${index}`}
+                alt={`Image of ${property.name}`}
                 layout="fill"
                 objectFit="cover"
                 priority={index === 0}
               />
-              <SlideCounter>
-                {index + 1} / {totalSlides}
-              </SlideCounter>
+              {index === currentIndex && (
+                <SlideCounter aria-live="polite">
+                  {index + 1} / {totalSlides}
+                </SlideCounter>
+              )}
             </CarouselImage>
           ))}
 
-          <NavButton onClick={goToPrevSlide} aria-label="Previous slide">
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
+          <NavButton onClick={goToPrevSlide} aria-label="Previous Slide">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
               <path
                 d="M15 18L9 12L15 6"
                 stroke="#2c3e50"
@@ -108,14 +113,8 @@ const PropertyCarousel = () => {
             </svg>
           </NavButton>
 
-          <NavButton onClick={goToNextSlide} aria-label="Next slide">
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
+          <NavButton onClick={goToNextSlide} aria-label="Next Slide">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
               <path
                 d="M9 18L15 12L9 6"
                 stroke="#2c3e50"
@@ -127,10 +126,10 @@ const PropertyCarousel = () => {
           </NavButton>
         </MainCarousel>
 
-        <SideImage onClick={goToNextSlide}>
+        <SideImage onClick={goToNextSlide} role="button" aria-label="Next Slide">
           <Image
-            src={propertyData[nextImageIndex].image}
-            alt={`Property preview ${nextImageIndex}`}
+            src={propertyData[nextIndex].image}
+            alt={`Preview of ${propertyData[nextIndex].name}`}
             layout="fill"
             objectFit="cover"
           />
@@ -139,19 +138,19 @@ const PropertyCarousel = () => {
 
       <ContentSection>
         <PropertyInfo>
-          <PropertyName>{propertyData[currentIndex].name}</PropertyName>
-          <PropertyDescription>
-            {propertyData[currentIndex].description}
-          </PropertyDescription>
+          <PropertyName>{currentProperty.name}</PropertyName>
+          <PropertyDescription>{currentProperty.description}</PropertyDescription>
         </PropertyInfo>
       </ContentSection>
 
-      <DotsContainer>
+      <DotsContainer role="tablist" aria-label="Carousel Navigation">
         {propertyData.map((_, index) => (
           <Dot
             key={index}
             $isActive={index === currentIndex}
             onClick={() => goToSlide(index)}
+            role="tab"
+            aria-selected={index === currentIndex}
             aria-label={`Go to slide ${index + 1}`}
           />
         ))}

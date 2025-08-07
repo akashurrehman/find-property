@@ -1,87 +1,92 @@
 "use client";
-import React, { useState } from "react";
-import Image from "next/image";
-import { sampleProperties } from "@/src/utils/sampleProperties";
+
+import React, { useState, useEffect, useMemo } from "react";
+import useSWR from "swr";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   Container,
   FiltersBar,
   FilterInput,
   FilterSelect,
-  SortSelect,
   SortContainer,
-  PropertyCard,
-  ActionButtons,
-  ActionButton,
+  SortSelect,
   PropertiesGrid,
   ViewMoreButton,
-  PropertyImageContainer,
-  PropertyDetail,
-  ImageDots,
-  ImageDot,
-  PropertyImage,
-  PropertyImageSlider,
-  PropertyTitle,
-  PropertyInfo,
-  PropertyPrice,
-  PropertyDetails,
-  PropertyAddress,
 } from "./style";
-const PropertyListing = () => {
-  const [sortBy, setSortBy] = useState("price-high-low");
-  const [filters, setFilters] = useState({
+
+import {
+  applyFilters,
+  applySorting,
+  FilterValues,
+  SortOption,
+} from "../../utils/propertyHelpers";
+
+import PropertyCardItem from "../PropertyCard";
+import SkeletonCard from "../PropertySkeleton";
+import { PropertyItem } from "@/src/types/propertyItem";
+
+
+const fetcher = () =>
+  new Promise<PropertyItem[]>((resolve) => {
+    setTimeout(() => {
+      import("@/src/utils/sampleProperties").then((mod) =>
+        resolve(mod.sampleProperties)
+      );
+    }, 1200); 
+  });
+
+const PropertyListing: React.FC = () => {
+  const [sortBy, setSortBy] = useState<SortOption>("price-high-low");
+  const [filters, setFilters] = useState<FilterValues>({
     postCode: "",
     minPrice: "",
     maxPrice: "",
     minBed: "",
     maxBed: "",
   });
-  const [currentImageIndex, setCurrentImageIndex] = useState<
-    Record<number, number>
-  >(
-    sampleProperties.reduce(
-      (acc, property) => ({ ...acc, [property.id]: 0 }),
-      {}
-    )
-  );
+
+  const [currentImageIndex, setCurrentImageIndex] = useState<Record<number, number>>({});
+
+  const { data: properties, error, isLoading } = useSWR("/api/properties", fetcher);
+
+  useEffect(() => {
+    if (properties && properties.length > 0) {
+      const initialIndex = properties.reduce((acc, property) => {
+        acc[property.id] = 0;
+        return acc;
+      }, {} as Record<number, number>);
+      setCurrentImageIndex(initialIndex);
+    }
+  }, [properties]);
 
   const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setSortBy(e.target.value);
+    setSortBy(e.target.value as SortOption);
   };
-  const goToImage = (propertyId: number, index: number) => {
-    setCurrentImageIndex((prev) => ({
-      ...prev,
-      [propertyId]: index,
-    }));
-  };
-  const handleFilterChange = (key: string, value: string) => {
+
+  const handleFilterChange = (key: keyof FilterValues, value: string) => {
     setFilters((prev) => ({ ...prev, [key]: value }));
   };
 
-  const nextImage = (propertyId: number) => {
-    setCurrentImageIndex((prev) => {
-      const property = sampleProperties.find((p) => p.id === propertyId);
-      if (!property) return prev;
-
-      const currentIndex = prev[propertyId] || 0;
-      const nextIndex = (currentIndex + 1) % property.images.length;
-      return { ...prev, [propertyId]: nextIndex };
-    });
+  const goToImage = (propertyId: number, index: number) => {
+    setCurrentImageIndex((prev) => ({ ...prev, [propertyId]: index }));
   };
 
-  const prevImage = (propertyId: number) => {
-    setCurrentImageIndex((prev) => {
-      const property = sampleProperties.find((p) => p.id === propertyId);
-      if (!property) return prev;
+  const filteredAndSorted = useMemo(() => {
+    if (!properties) return [];
+    const filtered = applyFilters(properties, filters);
+    return applySorting(filtered, sortBy);
+  }, [properties, filters, sortBy]);
 
-      const currentIndex = prev[propertyId] || 0;
-      const prevIndex =
-        (currentIndex - 1 + property.images.length) % property.images.length;
-      return { ...prev, [propertyId]: prevIndex };
-    });
-  };
+  if (error) return <div>Failed to load properties. Please try again later.</div>;
 
   return (
-    <Container>
+    <Container
+      as={motion.div}
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.3 }}
+    >
       <FiltersBar>
         <FilterInput
           type="text"
@@ -89,44 +94,43 @@ const PropertyListing = () => {
           value={filters.postCode}
           onChange={(e) => handleFilterChange("postCode", e.target.value)}
         />
-
         <FilterInput
           type="number"
           placeholder="Min Price"
           value={filters.minPrice}
           onChange={(e) => handleFilterChange("minPrice", e.target.value)}
         />
-
         <FilterInput
           type="number"
           placeholder="Max Price"
           value={filters.maxPrice}
           onChange={(e) => handleFilterChange("maxPrice", e.target.value)}
         />
-
         <FilterSelect
           value={filters.minBed}
           onChange={(e) => handleFilterChange("minBed", e.target.value)}
         >
           <option value="">Min Bed</option>
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4+</option>
+          {[1, 2, 3, 4].map((n) => (
+            <option key={n} value={n.toString()}>
+              {n}+
+            </option>
+          ))}
         </FilterSelect>
-
         <FilterSelect
           value={filters.maxBed}
           onChange={(e) => handleFilterChange("maxBed", e.target.value)}
         >
           <option value="">Max Bed</option>
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4+</option>
+          {[1, 2, 3, 4].map((n) => (
+            <option key={n} value={n.toString()}>
+              {n}+
+            </option>
+          ))}
         </FilterSelect>
       </FiltersBar>
 
+      {/* Sorting */}
       <SortContainer>
         <SortSelect value={sortBy} onChange={handleSortChange}>
           <option value="price-high-low">SORT BY: PRICE HIGH-LOW</option>
@@ -136,60 +140,38 @@ const PropertyListing = () => {
         </SortSelect>
       </SortContainer>
 
+      {/* Properties */}
       <PropertiesGrid>
-        {sampleProperties.map((property) => (
-          <PropertyCard key={property.id}>
-            <PropertyImageContainer>
-              <PropertyImageSlider
-                style={{
-                  transform: `translateX(-${
-                    (currentImageIndex[property.id] || 0) * 100
-                  }%)`,
-                }}
+        <AnimatePresence>
+          {isLoading &&
+            Array.from({ length: 6 }).map((_, idx) => (
+              <motion.div key={idx} exit={{ opacity: 0 }}>
+                <SkeletonCard />
+              </motion.div>
+            ))}
+
+          {!isLoading &&
+            filteredAndSorted.map((property) => (
+              <motion.div
+                key={property.id}
+                initial={{ opacity: 0, scale: 0.98 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.2 }}
               >
-                {property.images.map((image, idx) => (
-                  <PropertyImage key={idx}>
-                    <Image
-                      src={image}
-                      alt={`Property ${property.id} image ${idx + 1}`}
-                      layout="fill"
-                      objectFit="cover"
-                    />
-                  </PropertyImage>
-                ))}
-              </PropertyImageSlider>
-
-              <ImageDots>
-                {property.images.map((_, idx) => (
-                  <ImageDot
-                    key={idx}
-                    $active={idx === currentImageIndex[property.id]}
-                    onClick={() => goToImage(property.id, idx)}
-                  />
-                ))}
-              </ImageDots>
-
-              <ActionButtons>
-                <ActionButton title="Add to favorites">♡</ActionButton>
-                <ActionButton title="Share">⚹</ActionButton>
-              </ActionButtons>
-            </PropertyImageContainer>
-
-            <PropertyInfo>
-              <PropertyTitle>{property.name}</PropertyTitle>
-              <PropertyAddress>{property.streetName}</PropertyAddress>
-              <PropertyDetails>
-                <PropertyDetail>{property.bedrooms} Beds</PropertyDetail>
-                <PropertyDetail>{property.bathrooms} Baths</PropertyDetail>
-                <PropertyDetail>{property.type}</PropertyDetail>
-              </PropertyDetails>
-              <PropertyPrice>{property.price}</PropertyPrice>
-            </PropertyInfo>
-          </PropertyCard>
-        ))}
+                <PropertyCardItem
+                  property={property}
+                  currentImageIndex={currentImageIndex[property.id] || 0}
+                  onDotClick={(idx) => goToImage(property.id, idx)}
+                />
+              </motion.div>
+            ))}
+        </AnimatePresence>
       </PropertiesGrid>
 
-      <ViewMoreButton>VIEW MORE</ViewMoreButton>
+      {!isLoading && filteredAndSorted.length > 0 && (
+        <ViewMoreButton>VIEW MORE</ViewMoreButton>
+      )}
     </Container>
   );
 };

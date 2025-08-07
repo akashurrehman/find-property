@@ -3,11 +3,11 @@
 import styled from "styled-components";
 
 export const TopBar = styled.header`
-  background-color: #1e3a5f;
-  color: white;
+  background-color: ${({ theme }) => theme.colors.headerBackground};
+  color: ${({ theme }) => theme.colors.headerText};
   position: relative;
   z-index: 100;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid ${({ theme }) => theme.colors.inputBorder};
 `;
 
 export const Container = styled.div`
@@ -19,7 +19,7 @@ export const Container = styled.div`
   align-items: center;
   height: 70px;
 
-  @media (max-width: 768px) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
     padding: 0 0.5rem;
     height: 60px;
   }
@@ -36,7 +36,7 @@ export const LogoContainer = styled.div`
     width: auto;
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
     img {
       max-height: 30px;
     }
@@ -57,15 +57,15 @@ export const NavWrapper = styled.div`
 export const MobileMenuButton = styled.button`
   background: none;
   border: none;
-  color: white;
+  color: ${({ theme }) => theme.colors.white};
   display: none;
   cursor: pointer;
   padding: 0.5rem;
   margin-right: 0.5rem;
 
   &:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-    border-radius: 4px;
+    background-color: ${({ theme }) => theme.colors.inputBackground};
+    border-radius: ${({ theme }) => theme.borderRadius.sm};
   }
 
   @media (max-width: 1024px) {
@@ -87,18 +87,18 @@ export const Nav = styled.nav<{ $mobileOpen?: boolean }>`
     left: 0;
     right: 0;
     width: 100%;
-    background-color: #1e3a5f;
+    background-color: ${({ theme }) => theme.colors.mobileNavBackground};
     padding: 10px;
+    box-shadow: ${({ theme }) => theme.shadow.light};
     gap: 0;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     display: ${({ $mobileOpen }) => ($mobileOpen ? "flex" : "none")};
   }
 `;
 
 export const NavItem = styled.a`
-  color: white;
+  color: ${({ theme }) => theme.colors.white};
   text-transform: uppercase;
-  font-size: 0.8rem;
+  font-size: ${({ theme }) => theme.fontSizes.xs};
   font-weight: 500;
   cursor: pointer;
   text-decoration: none;
@@ -108,17 +108,17 @@ export const NavItem = styled.a`
   letter-spacing: 0.5px;
 
   &:hover {
-    border-bottom-color: #d4af37;
+    border-bottom-color: ${({ theme }) => theme.colors.navHover};
   }
 
   @media (max-width: 1024px) {
     padding: 10px 2rem;
     width: 100%;
     text-align: left;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid ${({ theme }) => theme.colors.inputBorder};
 
     &:hover {
-      background-color: rgba(255, 255, 255, 0.05);
+      background-color: ${({ theme }) => theme.colors.inputBackground};
       border-bottom-color: transparent;
     }
 
@@ -134,18 +134,18 @@ export const RightSection = styled.div`
   gap: 1rem;
   flex-shrink: 0;
 
-  @media (max-width: 768px) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
     gap: 0.5rem;
   }
 `;
 
 export const AppraisalButton = styled.button`
-  background-color: #d4af37;
-  color: white;
+  background-color: ${({ theme }) => theme.colors.footerHighlight};
+  color: ${({ theme }) => theme.colors.white};
   border: none;
   padding: 0.6rem 1rem;
   font-weight: 600;
-  font-size: 0.7rem;
+  font-size: ${({ theme }) => theme.fontSizes.xs};
   cursor: pointer;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -162,11 +162,11 @@ export const AppraisalButton = styled.button`
 `;
 
 export const LanguageSelector = styled.span`
-  font-size: 0.8rem;
+  font-size: ${({ theme }) => theme.fontSizes.xs};
   font-weight: 500;
-  color: white;
+  color: ${({ theme }) => theme.colors.white};
 
-  @media (max-width: 768px) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
     display: none;
   }
 `;
@@ -174,7 +174,7 @@ export const LanguageSelector = styled.span`
 export const UserIcon = styled.button`
   background: none;
   border: none;
-  color: white;
+  color: ${({ theme }) => theme.colors.white};
   cursor: pointer;
   padding: 0.25rem;
   display: flex;
@@ -183,7 +183,7 @@ export const UserIcon = styled.button`
   transition: background-color 0.2s ease;
 
   &:hover {
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: ${({ theme }) => theme.colors.inputBackground};
   }
 
   @media (max-width: 640px) {
@@ -194,17 +194,17 @@ export const UserIcon = styled.button`
 export const IconButton = styled.button`
   background: none;
   border: none;
-  color: white;
+  color: ${({ theme }) => theme.colors.white};
   cursor: pointer;
   padding: 0.5rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 4px;
+  border-radius: ${({ theme }) => theme.borderRadius.sm};
   transition: background-color 0.2s ease;
 
   &:hover {
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: ${({ theme }) => theme.colors.inputBackground};
   }
 `;
 
@@ -214,7 +214,7 @@ export const Overlay = styled.div`
   left: 0;
   width: 100%;
   height: calc(100vh - 70px);
-  background: rgba(0, 0, 0, 0.5);
+  background: ${({ theme }) => theme.colors.overlayBackground};
   z-index: 50;
 
   @media (min-width: 1025px) {
@@ -223,8 +223,8 @@ export const Overlay = styled.div`
 `;
 
 export const SearchBar = styled.div`
-  background: #00284b80;
-  border-bottom: 1px solid #ddd;
+  background: ${({ theme }) => theme.colors.searchBarBackground};
+  border-bottom: 1px solid ${({ theme }) => theme.colors.inputBorderColor};
   padding: 1rem 0;
 
   > div {
@@ -233,7 +233,7 @@ export const SearchBar = styled.div`
     align-items: center;
     gap: 1rem;
 
-    @media (max-width: 768px) {
+    @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
       gap: 0.5rem;
     }
   }
@@ -242,10 +242,7 @@ export const SearchBar = styled.div`
 export const RadioGroup = styled.div`
   display: flex;
   align-items: center;
-  gap: 1.5rem;
-  flex-shrink: 0;
-
-  @media (max-width: 640px) {
+  gap: 1.5rem  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     gap: 1rem;
   }
 `;
@@ -254,68 +251,68 @@ export const RadioLabel = styled.label`
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  font-size: 0.9rem;
+  font-size: ${({ theme }) => theme.fontSizes.sm};
   font-weight: 500;
-  color: #1e3a5f;
+  color: ${({ theme }) => theme.colors.headerBackground};
   cursor: pointer;
   text-transform: uppercase;
   letter-spacing: 0.5px;
 
   span {
-    font-size: 0.8rem;
+    font-size: ${({ theme }) => theme.fontSizes.xs};
   }
 `;
 
 export const RadioInput = styled.input`
   width: 16px;
   height: 16px;
-  accent-color: #1e3a5f;
+  accent-color: ${({ theme }) => theme.colors.headerBackground};
 `;
 
 export const SearchInput = styled.input`
   flex: 1;
   padding: 0.75rem 1rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 0.9rem;
+  border: 1px solid ${({ theme }) => theme.colors.inputBorderColor};
+  border-radius: ${({ theme }) => theme.borderRadius.sm};
+  font-size: ${({ theme }) => theme.fontSizes.sm};
   min-width: 200px;
-  background: white;
+  background: ${({ theme }) => theme.colors.white};
 
   &::placeholder {
-    color: #888;
+    color: ${({ theme }) => theme.colors.secondaryText};
   }
 
   &:focus {
     outline: none;
-    border-color: #1e3a5f;
-    box-shadow: 0 0 0 2px rgba(30, 58, 95, 0.1);
+    border-color: ${({ theme }) => theme.colors.headerBackground};
+    box-shadow: 0 0 0 2px ${({ theme }) => theme.colors.inputFocusShadow};
   }
 
-  @media (max-width: 640px) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     min-width: 150px;
     padding: 0.6rem 0.8rem;
   }
 `;
 
 export const SearchButton = styled.button`
-  background-color: #d4af37;
+  background-color: ${({ theme }) => theme.colors.footerHighlight};
   border: none;
-  color: white;
+  color: ${({ theme }) => theme.colors.white};
   padding: 0.75rem 1.5rem;
   cursor: pointer;
   font-weight: 600;
-  font-size: 0.8rem;
+  font-size: ${({ theme }) => theme.fontSizes.xs};
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  border-radius: 4px;
+  border-radius: ${({ theme }) => theme.borderRadius.sm};
   transition: background-color 0.2s ease;
   flex-shrink: 0;
 
   &:hover {
-    background-color: #c19b26;
+    background-color: ${({ theme }) => theme.colors.submitHover};
   }
 
-  @media (max-width: 640px) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     padding: 0.6rem 1rem;
     font-size: 0.7rem;
   }

@@ -1,4 +1,6 @@
-export const sampleProperties = [
+import { PropertyItem } from "../types/propertyItem";
+
+export const sampleProperties: PropertyItem[] = [
   {
     id: 1,
     name: "Modern Luxury Villa",

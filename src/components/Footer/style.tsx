@@ -1,4 +1,3 @@
-
 import styled from "styled-components";
 
 export const FooterWrapper = styled.footer`
@@ -6,8 +5,8 @@ export const FooterWrapper = styled.footer`
 `;
 
 export const MainFooter = styled.div`
-  background: #1e3a5f;
-  color: white;
+  background: ${({ theme }) => theme.colors.footerBackground};
+  color: ${({ theme }) => theme.colors.white};
   padding: 3rem 0 2rem;
 `;
 
@@ -23,24 +22,24 @@ export const FooterGrid = styled.div`
   gap: 3rem;
   margin-bottom: 2rem;
 
-  @media (max-width: 1024px) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.desktop}) {
     grid-template-columns: repeat(3, 1fr);
     gap: 2rem;
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
     grid-template-columns: repeat(2, 1fr);
     gap: 1.5rem;
   }
 
-  @media (max-width: 480px) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     grid-template-columns: 1fr;
     gap: 2rem;
   }
 `;
 
 export const LogoSection = styled.div`
-  @media (max-width: 1024px) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.desktop}) {
     grid-column: 1 / -1;
     margin-bottom: 1rem;
   }
@@ -56,7 +55,7 @@ export const Logo = styled.div`
 export const LogoIcon = styled.div`
   width: 40px;
   height: 40px;
-  background: #d4af37;
+  background: ${({ theme }) => theme.colors.footerHighlight};
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -67,7 +66,7 @@ export const LogoIcon = styled.div`
     content: "";
     width: 20px;
     height: 20px;
-    background: #1e3a5f;
+    background: ${({ theme }) => theme.colors.footerBackground};
     border-radius: 50% 0;
     transform: rotate(45deg);
   }
@@ -76,13 +75,13 @@ export const LogoIcon = styled.div`
 export const LogoText = styled.img``;
 
 export const LogoTagline = styled.div`
-  font-size: 0.8rem;
+  font-size: ${({ theme }) => theme.fontSizes.xs};
   color: #b8c5d1;
   margin-top: 0.5rem;
 `;
 
 export const FooterColumn = styled.div`
-  @media (max-width: 480px) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     &:nth-child(n + 3) {
       margin-top: 1rem;
     }
@@ -90,8 +89,8 @@ export const FooterColumn = styled.div`
 `;
 
 export const ColumnTitle = styled.h4`
-  color: #d4af37;
-  font-size: 0.9rem;
+  color: ${({ theme }) => theme.colors.footerHighlight};
+  font-size: ${({ theme }) => theme.fontSizes.sm};
   font-weight: 600;
   margin-bottom: 1.5rem;
   text-transform: uppercase;
@@ -109,19 +108,19 @@ export const ColumnItem = styled.li`
 `;
 
 export const ColumnLink = styled.a`
-  color: #e8f4fd;
-  font-size: 0.9rem;
+  color: ${({ theme }) => theme.colors.footerText};
+  font-size: ${({ theme }) => theme.fontSizes.sm};
   text-decoration: none;
   transition: color 0.2s ease;
 
   &:hover {
-    color: #d4af37;
+    color: ${({ theme }) => theme.colors.footerHighlight};
   }
 `;
 
 export const BottomFooter = styled.div`
-  background: #e8f4fd;
-  color: #1e3a5f;
+  background: ${({ theme }) => theme.colors.footerBottomBackground};
+  color: ${({ theme }) => theme.colors.footerBottomText};
   padding: 1.5rem 0;
 `;
 
@@ -136,9 +135,9 @@ export const ContactInfo = styled.div`
   align-items: center;
   gap: 2rem;
   margin-bottom: 1.5rem;
-  font-size: 0.9rem;
+  font-size: ${({ theme }) => theme.fontSizes.sm};
 
-  @media (max-width: 768px) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
     flex-direction: column;
     align-items: flex-start;
     gap: 0.8rem;
@@ -153,7 +152,7 @@ export const ContactItem = styled.div`
   svg {
     width: 16px;
     height: 16px;
-    color: #1e3a5f;
+    color: ${({ theme }) => theme.colors.footerBottomText};
   }
 `;
 
@@ -163,7 +162,7 @@ export const FooterBottom = styled.div`
   align-items: flex-end;
   gap: 2rem;
 
-  @media (max-width: 768px) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
     flex-direction: column;
     align-items: flex-start;
     gap: 1.5rem;
@@ -175,8 +174,8 @@ export const LeftSection = styled.div`
 `;
 
 export const Copyright = styled.div`
-  font-size: 0.8rem;
-  color: #666;
+  font-size: ${({ theme }) => theme.fontSizes.xs};
+  color: ${({ theme }) => theme.colors.footerCopyright};
   margin-bottom: 1rem;
   line-height: 1.4;
 `;
@@ -185,15 +184,15 @@ export const LegalLinks = styled.div`
   display: flex;
   gap: 1.5rem;
 
-  @media (max-width: 480px) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     flex-direction: column;
     gap: 0.5rem;
   }
 `;
 
 export const LegalLink = styled.a`
-  color: #1e3a5f;
-  font-size: 0.8rem;
+  color: ${({ theme }) => theme.colors.footerBottomText};
+  font-size: ${({ theme }) => theme.fontSizes.xs};
   text-decoration: none;
 
   &:hover {
@@ -207,7 +206,7 @@ export const RightSection = styled.div`
   align-items: flex-end;
   gap: 1rem;
 
-  @media (max-width: 768px) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
     align-items: flex-start;
     width: 100%;
   }
@@ -220,8 +219,8 @@ export const SocialLinks = styled.div`
 `;
 
 export const SocialText = styled.span`
-  font-size: 0.8rem;
-  color: #1e3a5f;
+  font-size: ${({ theme }) => theme.fontSizes.xs};
+  color: ${({ theme }) => theme.colors.footerBottomText};
   margin-right: 0.5rem;
   font-weight: 600;
 `;
@@ -229,9 +228,9 @@ export const SocialText = styled.span`
 export const SocialIcon = styled.a`
   width: 32px;
   height: 32px;
-  background: #1e3a5f;
-  color: white;
-  border-radius: 4px;
+  background: ${({ theme }) => theme.colors.footerBottomText};
+  color: ${({ theme }) => theme.colors.white};
+  border-radius: ${({ theme }) => theme.borderRadius.sm};
   display: flex;
   align-items: center;
   justify-content: center;
@@ -239,7 +238,7 @@ export const SocialIcon = styled.a`
   transition: background-color 0.2s ease;
 
   &:hover {
-    background: #d4af37;
+    background: ${({ theme }) => theme.colors.footerHighlight};
   }
 
   svg {
@@ -255,8 +254,8 @@ export const Affiliations = styled.div`
 `;
 
 export const AffiliationText = styled.span`
-  font-size: 0.8rem;
-  color: #1e3a5f;
+  font-size: ${({ theme }) => theme.fontSizes.xs};
+  color: ${({ theme }) => theme.colors.footerBottomText};
   font-weight: 600;
 `;
 
@@ -266,3 +265,14 @@ export const AffiliationLogos = styled.div`
 `;
 
 export const AffiliationLogo = styled.img``;
+
+export const StyledHr = styled.hr`
+  width: 100%;
+  margin: 0 auto;
+  transform: translateY(-15px);
+  border: 1px solid #cd9b4b;
+  background-color: transparent; /* to avoid default hr background */
+  height: 1px; /* ensures consistent thickness */
+  border-style: solid;
+  border-width: 1px 0 0 0;
+`;

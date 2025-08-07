@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useCallback } from "react";
 
 import {
   ServicesContainer,
@@ -9,18 +9,29 @@ import {
   FindOutMoreButton,
 } from "./style";
 
-const AddedValueServices = () => {
+const AddedValueServices: React.FC = () => {
+  // Memoize click handler for potential future logic (analytics, navigation)
+  const handleClick = useCallback(() => {
+    console.log("Find out more clicked");
+  }, []);
+
   return (
-    <ServicesContainer>
+    <ServicesContainer role="region" aria-labelledby="added-value-services-title">
       <ContentWrapper>
-        <Title>Added-Value Services</Title>
+        <Title id="added-value-services-title">Added-Value Services</Title>
         <Description>
           We’re always thinking ahead for you. At Druce, our added-value
           services transcend traditional property buying and selling, constantly
           anticipating and providing comprehensive solutions for all of your
           current and future household needs.
         </Description>
-        <FindOutMoreButton>FIND OUT MORE</FindOutMoreButton>
+        <FindOutMoreButton
+          type="button"
+          onClick={handleClick}
+          aria-label="Find out more about added-value services"
+        >
+          FIND OUT MORE
+        </FindOutMoreButton>
       </ContentWrapper>
     </ServicesContainer>
   );

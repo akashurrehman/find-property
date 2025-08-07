@@ -1,6 +1,8 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const ServicesContainer = styled.section`
+  background: no-repeat center center/cover;
+  background-image: url('/back.png');
   position: relative;
   width: 100%;
   max-width: 100vw;
@@ -8,16 +10,15 @@ export const ServicesContainer = styled.section`
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 60px 20px;
-  color: white;
+  padding: ${({ theme }) => theme.spacing.xl} ${({ theme }) => theme.spacing.md};
+  color: ${({ theme }) => theme.colors.white};
   text-align: left;
   overflow: hidden;
-  background: url("/back.png") no-repeat center center/cover;
   box-sizing: border-box;
 
-  @media (max-width: 768px) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
     min-height: 300px;
-    padding: 40px 20px;
+    padding: ${({ theme }) => theme.spacing.lg} ${({ theme }) => theme.spacing.md};
     text-align: center;
   }
 `;
@@ -28,78 +29,78 @@ export const ContentWrapper = styled.div`
   max-width: 1200px;
   width: 100%;
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 0 ${({ theme }) => theme.spacing.md};
   box-sizing: border-box;
 
-  @media (max-width: 1240px) {
-    padding: 0 40px;
+  @media (max-width: ${({ theme }) => theme.breakpoints.desktop}) {
+    padding: 0 ${({ theme }) => theme.spacing.lg};
   }
 
-  @media (max-width: 768px) {
-    padding: 0 20px;
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    padding: 0 ${({ theme }) => theme.spacing.md};
   }
 `;
 
 export const Title = styled.h2`
-  font-size: 2.5rem;
+  font-size: ${({ theme }) => theme.fontSizes.xl};
   font-weight: 700;
-  margin-bottom: 1.5rem;
+  margin-bottom: ${({ theme }) => theme.spacing.lg};
   line-height: 1.2;
-  color: #2c3e50;
+  color: ${({ theme }) => theme.colors.primaryText};
 
-  @media (max-width: 768px) {
-    font-size: 2rem;
-    margin-bottom: 1rem;
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    font-size: ${({ theme }) => theme.fontSizes.lg};
+    margin-bottom: ${({ theme }) => theme.spacing.md};
   }
 
-  @media (max-width: 480px) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     font-size: 1.8rem;
   }
 `;
 
 export const Description = styled.p`
-  font-size: 1rem;
+  font-size: ${({ theme }) => theme.fontSizes.base};
   line-height: 1.6;
-  margin-bottom: 2rem;
+  margin-bottom: ${({ theme }) => theme.spacing.xl};
   max-width: 500px;
-  color: #2c3e50;
+  color: ${({ theme }) => theme.colors.primaryText};
 
-  @media (max-width: 768px) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
     font-size: 0.95rem;
-    margin-bottom: 1.5rem;
+    margin-bottom: ${({ theme }) => theme.spacing.lg};
     max-width: 100%;
   }
 
-  @media (max-width: 480px) {
-    font-size: 0.9rem;
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    font-size: ${({ theme }) => theme.fontSizes.sm};
   }
 `;
 
 export const FindOutMoreButton = styled.button`
-  background: #2c3e50;
-  color: white;
+  background: ${({ theme }) => theme.colors.buttonBackground};
+  color: ${({ theme }) => theme.colors.white};
   border: none;
-  padding: 12px 30px;
-  font-size: 0.9rem;
+  padding: ${({ theme }) => theme.spacing.sm} ${({ theme }) => theme.spacing.lg};
+  font-size: ${({ theme }) => theme.fontSizes.sm};
   font-weight: 600;
   text-transform: uppercase;
   cursor: pointer;
   transition: all 0.3s ease;
-  border-radius: 4px;
+  border-radius: ${({ theme }) => theme.borderRadius.sm};
   letter-spacing: 1px;
 
   &:hover {
-    background: #34495e;
+    background: ${({ theme }) => theme.colors.buttonHover};
     transform: translateY(-2px);
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
     padding: 10px 25px;
     font-size: 0.85rem;
   }
 
-  @media (max-width: 480px) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     padding: 10px 20px;
-    font-size: 0.8rem;
+    font-size: ${({ theme }) => theme.fontSizes.xs};
   }
 `;
