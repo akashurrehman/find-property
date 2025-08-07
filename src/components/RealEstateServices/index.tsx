@@ -43,7 +43,7 @@ const RealEstateServices: React.FC = () => {
     {
       title: "Selling @Druce",
       description:
-        "We understand the challenges of selling a home. We provide a holistic approach that's stress-free and make selling your home a breeze with our end-to-end service.",
+        "We understand the challenges of selling a home. We provide a holistic approach thats stress-free and make selling your home a breeze with our end-to-end service.",
       linkText: "Find out more",
     },
     {

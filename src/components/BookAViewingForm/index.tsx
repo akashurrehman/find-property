@@ -163,7 +163,7 @@ export default function BookAViewingForm() {
                 onChange={handleChange}
               />
               <span>
-                I would like to opt-in to receive Druce's monthly newsletter.
+                I would like to opt-in to receive Druce&apos;s monthly newsletter.
               </span>
             </CheckboxWrapper>
           </FullWidth>
