@@ -1,11 +1,10 @@
 import useSWR from "swr";
 
-const fetcher = (url: string) =>
-  new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(require("../utils/sampleProperties").sampleProperties);
-    }, 1500); // Simulate network delay
-  });
+const fetcher = async () => {
+  const mod = await import("@/src/utils/sampleProperties");
+  return mod.sampleProperties;
+};
+
 
 export const useProperties = () => {
   const { data, error, isLoading } = useSWR("/api/properties", fetcher);
