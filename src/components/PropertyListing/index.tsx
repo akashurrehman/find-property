@@ -80,6 +80,7 @@ const PropertyListing: React.FC = () => {
   if (error) return <div>Failed to load properties. Please try again later.</div>;
 
   return (
+    <div>
     <Container
       as={motion.div}
       initial={{ opacity: 0, y: 10 }}
@@ -130,6 +131,7 @@ const PropertyListing: React.FC = () => {
         </FilterSelect>
       </FiltersBar>
 
+    </Container>
       {/* Sorting */}
       <SortContainer>
         <SortSelect value={sortBy} onChange={handleSortChange}>
@@ -140,6 +142,7 @@ const PropertyListing: React.FC = () => {
         </SortSelect>
       </SortContainer>
 
+    
       {/* Properties */}
       <PropertiesGrid>
         <AnimatePresence>
@@ -172,7 +175,7 @@ const PropertyListing: React.FC = () => {
       {!isLoading && filteredAndSorted.length > 0 && (
         <ViewMoreButton>VIEW MORE</ViewMoreButton>
       )}
-    </Container>
+    </div>
   );
 };
 

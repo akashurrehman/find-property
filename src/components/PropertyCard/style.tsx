@@ -110,19 +110,20 @@ export const SortSelect = styled.select`
 
 export const PropertiesGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(335px, 1fr));
+  grid-template-columns: repeat(3, 1fr); /* Exactly 3 columns */
   gap: ${({ theme }) => theme.spacing.md};
   margin-bottom: ${({ theme }) => theme.spacing.lg};
 
-  @media (max-width: 811px) {
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  @media (max-width: ${({ theme }) => theme.breakpoints.desktop}) {
+    grid-template-columns: repeat(2, 1fr); /* 2 columns for tablets/desktops under 1240px */
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr; /* 1 column for mobile */
     gap: ${({ theme }) => theme.spacing.sm};
   }
 `;
+
 
 export const PropertyCard = styled.div`
   background-color: ${({ theme }) => theme.colors.white};
@@ -130,12 +131,15 @@ export const PropertyCard = styled.div`
   overflow: hidden;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  width: 100%; /* Take full grid cell width */
+  height: 480px;
 
   &:hover {
     transform: translateY(-4px);
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
   }
 `;
+
 
 export const PropertyImageContainer = styled.div`
   position: relative;

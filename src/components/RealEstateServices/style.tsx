@@ -78,7 +78,7 @@ export const ImageContainer = styled.div`
 `;
 
 export const CardContent = styled.div`
-  padding: ${({ theme }) => theme.spacing.lg};
+  padding: ${({ theme }) => theme.spacing.md};
 `;
 
 export const CardTitle = styled.h3`

@@ -4,7 +4,7 @@ export const Container = styled.div`
   max-width: 100%;
   margin: 0 auto;
   padding: ${({ theme }) => theme.spacing.md};
-  background-color: ${({ theme }) => theme.colors.background};
+  background-color: ${({ theme }) => theme.colors.Slatebackground};
 `;
 
 export const FiltersBar = styled.div`
@@ -12,11 +12,9 @@ export const FiltersBar = styled.div`
   flex-wrap: wrap;
   gap: ${({ theme }) => theme.spacing.sm};
   padding: ${({ theme }) => theme.spacing.sm};
-  background-color: ${({ theme }) => theme.colors.white};
-  border-radius: ${({ theme }) => theme.borderRadius.lg};
   margin-bottom: ${({ theme }) => theme.spacing.md};
   align-items: center;
-  box-shadow: ${({ theme }) => theme.shadow.light};
+  justify-content: center;
 
   @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
     flex-direction: column;
@@ -113,6 +111,7 @@ export const PropertiesGrid = styled.div`
   grid-template-columns: repeat(auto-fill, minmax(335px, 1fr));
   gap: ${({ theme }) => theme.spacing.md};
   margin-bottom: ${({ theme }) => theme.spacing.lg};
+  padding: ${({ theme }) => theme.spacing.lg};
 
   @media (max-width: 811px) {
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -130,6 +129,8 @@ export const PropertyCard = styled.div`
   overflow: hidden;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+width: 410.66668701171875px;
+height: 480px;
 
   &:hover {
     transform: translateY(-4px);

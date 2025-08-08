@@ -7,7 +7,15 @@ export const TopBar = styled.header`
   color: ${({ theme }) => theme.colors.headerText};
   position: relative;
   z-index: 100;
+`;
+
+export const HeaderTopRow = styled.div`
   border-bottom: 1px solid ${({ theme }) => theme.colors.inputBorder};
+  padding: 0.5rem 0;
+`;
+
+export const HeaderBottomRow = styled.div`
+  padding: 0.5rem 0;
 `;
 
 export const Container = styled.div`
@@ -17,22 +25,63 @@ export const Container = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 70px;
 
   @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
     padding: 0 0.5rem;
-    height: 60px;
+  }
+`;
+
+export const SearchContainer = styled.div`
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    padding: 0 0.5rem;
+  }
+`;
+
+export const LeftSection = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+export const AppraisalButton = styled.button`
+  background-color: ${({ theme }) => theme.colors.footerHighlight};
+  color: ${({ theme }) => theme.colors.white};
+  border: none;
+  padding: 0.6rem 1rem;
+  font-weight: 600;
+  font-size: ${({ theme }) => theme.fontSizes.xs};
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-radius: 2px;
+  transition: background-color 0.2s ease;
+  white-space: nowrap;
+
+  &:hover {
+    background-color: #c19b26;
+  }
+
+  @media (max-width: 900px) {
+    display: none;
   }
 `;
 
 export const LogoContainer = styled.div`
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
   display: flex;
   align-items: center;
-  flex-shrink: 0;
 
   img {
     height: auto;
-    max-height: 35px;
+    max-height: 45px;
     width: auto;
   }
 
@@ -40,14 +89,27 @@ export const LogoContainer = styled.div`
     img {
       max-height: 30px;
     }
+    position: static;
+    transform: none;
+    left: auto;
+  }
+`;
+
+export const RightSection = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex-shrink: 0;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    gap: 0.5rem;
   }
 `;
 
 export const NavWrapper = styled.div`
   display: flex;
   align-items: center;
-  flex: 1;
-  justify-content: center;
+  width: 100%;
 
   @media (max-width: 1024px) {
     justify-content: flex-end;
@@ -77,8 +139,10 @@ export const MobileMenuButton = styled.button`
 
 export const Nav = styled.nav<{ $mobileOpen?: boolean }>`
   display: flex;
-  gap: 2rem;
+  gap: 1.5rem;
   align-items: center;
+  width: 100%;
+  justify-content: center;
 
   @media (max-width: 1024px) {
     flex-direction: column;
@@ -92,6 +156,7 @@ export const Nav = styled.nav<{ $mobileOpen?: boolean }>`
     box-shadow: ${({ theme }) => theme.shadow.light};
     gap: 0;
     display: ${({ $mobileOpen }) => ($mobileOpen ? "flex" : "none")};
+    justify-content: flex-start;
   }
 `;
 
@@ -106,6 +171,7 @@ export const NavItem = styled.a`
   border-bottom: 2px solid transparent;
   transition: all 0.2s ease;
   letter-spacing: 0.5px;
+  white-space: nowrap;
 
   &:hover {
     border-bottom-color: ${({ theme }) => theme.colors.navHover};
@@ -128,43 +194,12 @@ export const NavItem = styled.a`
   }
 `;
 
-export const RightSection = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  flex-shrink: 0;
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
-    gap: 0.5rem;
-  }
-`;
-
-export const AppraisalButton = styled.button`
-  background-color: ${({ theme }) => theme.colors.footerHighlight};
-  color: ${({ theme }) => theme.colors.white};
-  border: none;
-  padding: 0.6rem 1rem;
-  font-weight: 600;
-  font-size: ${({ theme }) => theme.fontSizes.xs};
-  cursor: pointer;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  border-radius: 2px;
-  transition: background-color 0.2s ease;
-
-  &:hover {
-    background-color: #c19b26;
-  }
-
-  @media (max-width: 900px) {
-    display: none;
-  }
-`;
 
 export const LanguageSelector = styled.span`
   font-size: ${({ theme }) => theme.fontSizes.xs};
   font-weight: 500;
   color: ${({ theme }) => theme.colors.white};
+  white-space: nowrap;
 
   @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
     display: none;
@@ -210,10 +245,10 @@ export const IconButton = styled.button`
 
 export const Overlay = styled.div`
   position: fixed;
-  top: 70px;
+  top: 100px;
   left: 0;
   width: 100%;
-  height: calc(100vh - 70px);
+  height: calc(100vh - 100px);
   background: ${({ theme }) => theme.colors.overlayBackground};
   z-index: 50;
 
@@ -227,23 +262,24 @@ export const SearchBar = styled.div`
   border-bottom: 1px solid ${({ theme }) => theme.colors.inputBorderColor};
   padding: 1rem 0;
 
-  > div {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 1rem;
-
-    @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
-      gap: 0.5rem;
-    }
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    padding: 0.5rem 0;
   }
 `;
 
 export const RadioGroup = styled.div`
   display: flex;
   align-items: center;
-  gap: 1.5rem  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+  padding: 0.75rem 1rem;
+  background: ${({ theme }) => theme.colors.white};
+  gap: 1.5rem;
+  border: 1px solid ${({ theme }) => theme.colors.inputBorderColor};
+  border-right: none;
+  border-radius: 4px 0 0 4px;
+  
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     gap: 1rem;
+    padding: 0.5rem;
   }
 `;
 
@@ -271,12 +307,14 @@ export const RadioInput = styled.input`
 
 export const SearchInput = styled.input`
   flex: 1;
-  padding: 0.75rem 1rem;
+  padding: 0.65rem 1rem;
   border: 1px solid ${({ theme }) => theme.colors.inputBorderColor};
-  border-radius: ${({ theme }) => theme.borderRadius.sm};
+  border-left: none;
+  border-right: none;
   font-size: ${({ theme }) => theme.fontSizes.sm};
-  min-width: 200px;
+  min-width: 300px;
   background: ${({ theme }) => theme.colors.white};
+  height: 45px;
 
   &::placeholder {
     color: ${({ theme }) => theme.colors.secondaryText};
@@ -285,7 +323,6 @@ export const SearchInput = styled.input`
   &:focus {
     outline: none;
     border-color: ${({ theme }) => theme.colors.headerBackground};
-    box-shadow: 0 0 0 2px ${({ theme }) => theme.colors.inputFocusShadow};
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
@@ -298,22 +335,23 @@ export const SearchButton = styled.button`
   background-color: ${({ theme }) => theme.colors.footerHighlight};
   border: none;
   color: ${({ theme }) => theme.colors.white};
-  padding: 0.75rem 1.5rem;
+  padding: 0 1.5rem;
   cursor: pointer;
   font-weight: 600;
   font-size: ${({ theme }) => theme.fontSizes.xs};
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  border-radius: ${({ theme }) => theme.borderRadius.sm};
+  border-radius: 0 4px 4px 0;
   transition: background-color 0.2s ease;
   flex-shrink: 0;
+  height: 48px;
 
   &:hover {
     background-color: ${({ theme }) => theme.colors.submitHover};
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    padding: 0.6rem 1rem;
+    padding: 0 1rem;
     font-size: 0.7rem;
   }
 `;

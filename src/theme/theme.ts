@@ -1,6 +1,8 @@
 const theme = {
     colors: {
     background: '#ffffff',
+    Slatebackground: '#EAEDF0',
+    
     primaryText: '#2c3e50',
     secondaryText: '#7f8c8d',
     buttonBackground: '#2c3e50',
@@ -44,6 +46,7 @@ const theme = {
     md: '20px',
     lg: '40px',
     xl: '60px',
+    xxl: '80px',
   },
   fontSizes: {
     xs: '0.8rem',

@@ -5,12 +5,10 @@ export const ServicesContainer = styled.section`
   background-image: url('/back.png');
   position: relative;
   width: 100%;
-  max-width: 100vw;
   min-height: 400px;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: ${({ theme }) => theme.spacing.xl} ${({ theme }) => theme.spacing.md};
   color: ${({ theme }) => theme.colors.white};
   text-align: left;
   overflow: hidden;
@@ -28,8 +26,6 @@ export const ContentWrapper = styled.div`
   z-index: 2;
   max-width: 1200px;
   width: 100%;
-  margin: 0 auto;
-  padding: 0 ${({ theme }) => theme.spacing.md};
   box-sizing: border-box;
 
   @media (max-width: ${({ theme }) => theme.breakpoints.desktop}) {

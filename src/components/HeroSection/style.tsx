@@ -122,6 +122,11 @@ export const PropertyInfo = styled.div`
   display: flex;
   justify-content: space-between;
   width: 70%;
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+     width: 100%;
+     flex-direction: column;
+     text-align: center;
+  }
 `;
 
 export const PropertyName = styled.h3`
@@ -138,6 +143,11 @@ export const PropertyDescription = styled.p`
   line-height: 1.6;
   margin-bottom: ${({ theme }) => theme.spacing.md};
   width: 50%;
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+     width: 100%;
+     flex-direction: column;
+     text-align: center;
+  }
 `;
 
 export const DotsContainer = styled.div`
